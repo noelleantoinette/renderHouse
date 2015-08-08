@@ -1,0 +1,19 @@
+{
+  "name": "Renderhouse",
+  "version": "1.0.0",
+  "description": "Fullstack eCommerce Store",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noelleantoinette/renderHouse.git"
+  },
+  "author": "Mark Hansen, Noelle Wandel, Alex Holman, Alexius Wronka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noelleantoinette/renderHouse/issues"
+  },
+  "homepage": "https://github.com/noelleantoinette/renderHouse"
+}
