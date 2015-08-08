@@ -10,7 +10,7 @@ var db = require('../../../dbInit.js') // this file contains the connection to t
 var Product = new mongoose.Schema({
 	title: {type: String, maxlength: 20, required:true},
 	description: {type: String, max: 300},
-	lowResFileUrl: {type:String, required:true},
+	snapshotFileUrl: {type:String, required:true},
 	highResFileUrl: {type:String, required:true},
 	tags: {type:String, required:true},
 	license: String,
@@ -22,6 +22,7 @@ var Product = new mongoose.Schema({
 	comments: [{type: ObjectId, ref:"UserComments"}]
 })
 
-module.exports = db.Model
+module.exports = db.Model("Product",Product);
+
 
 
