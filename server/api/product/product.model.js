@@ -18,7 +18,7 @@ var Product = new mongoose.Schema({
 	price: Number,
 	freeOption: Boolean,
 	owner: {type: ObjectId, ref:"User", required:true},
-	timesDownloaded: Number
+	timesDownloaded: Number,
 	comments: [{type: ObjectId, ref:"UserComments"}]
 })
 
