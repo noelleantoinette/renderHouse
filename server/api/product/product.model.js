@@ -1,11 +1,10 @@
 // Bring in all third part libraries
 
 var mongoose = require('mongoose');
-var crypto = require('crypto');
 var shortid = require('shortid'); //this is a module that can generate shorter unique IDs in lieu of the long MongoDB standard _id.  This was found in the workshop Auther and will be implmeneted because...why not?
 
 // Bring in all outside files from within the app
-var db = require('../../../dbInit.js') // this file contains the connection to the database.  db represents a closure over the command mongoose.connect(databaseURI).connection
+var db = require('../../dbInit') // this file contains the connection to the database.  db represents a closure over the command mongoose.connect(databaseURI).connection
 
 var Product = new mongoose.Schema({
 	title: {type: String, maxlength: 20, required:true},
@@ -17,10 +16,10 @@ var Product = new mongoose.Schema({
 	formatsAvailable: {type:String, required:true},
 	price: Number,
 	freeOption: Boolean,
-	owner: {type: ObjectId, ref:"User", required:true},
-	timesDownloaded: Number
-	comments: [{type: ObjectId, ref:"UserComments"}]
-})
+	owner: {type: mongoose.Schema.Types.ObjectId, ref:"User", required:true},
+	timesDownloaded: Number,
+	comments: [{type: mongoose.Schema.Types.ObjectId, ref:"UserComments"}]
+});
 
 module.exports = db.Model("Product",Product);
 
