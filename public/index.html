@@ -1,12 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>RH</title>
+	<base href="/">
 
-
-
-<h1> TESTING INDEX </h1>
-
-
-
-
-
-
-
-
+    <!--local CSS dependencies-->
+    <link rel="stylesheet" type="text/css" href="/browser/app/main.css">
+    <link rel="stylesheet" type="text/css" href="/browser/components/navbar/navbar.css">   
+    <link rel="stylesheet" type="text/css" href="/browser/components/searchbar/searchbar.css"> 
+    <!--vendor JS dependencies-->
+    <script type="text/javascript" src="/lib/angular/angular.js"></script>
+    <script type="text/javascript" src="/lib/angular-ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
+    <!--angular JS dependencies-->
+    <script type="text/javascript" src="/browser/app/main.js"></script>
+    <script type="text/javascript" src="/browser/components/navbar/navbar.directive.js"></script>
+    <script type="text/javascript" src="/browser/components/searchbar/searchbar.directive.js"></script>
+    <!--Our JS-->
+</head>
+<body ng-app="renderhouse">
+	<navbar></navbar>
+	<searchbar></searchbar>
+	<ui-view></ui-view>
+</body>
+</html>
