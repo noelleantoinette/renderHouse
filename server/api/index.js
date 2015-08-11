@@ -16,6 +16,6 @@ router.use('/users', require('./users/users.router'));
 
 router.use('/product', require('./product/product.router'));
 
-router.us('/cart', require('./cart/cart.router'));
+router.use('/cart', require('./cart/cart.router'));
 
 module.exports = router;
