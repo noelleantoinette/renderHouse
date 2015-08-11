@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 
 // Bring in all outside files from within the app
-var db = require('../../../dbInit.js') // this file contains the connection to the database.  db represents a closure over the command mongoose.connect(databaseURI).connection
+var db = require('../../dbInit.js') // this file contains the connection to the database.  db represents a closure over the command mongoose.connect(databaseURI).connection
 
 
 var Cart = new mongoose.Schema({
@@ -12,4 +12,4 @@ var Cart = new mongoose.Schema({
 	date: {type: Date}
 });
 
-module.exports = db.Model("Cart",Cart)
+module.exports = db.model("Cart",Cart)

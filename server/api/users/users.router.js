@@ -4,7 +4,7 @@ var router = express.Router();
 // pull in user model
 
 var HttpError = require('../../utils/HttpError');
-var User = require('./user.model');
+var User = require('./users.model');
 
 // transform any :id URL parameter in a requestUser json object on the req object - easier to use downthe request chain
 router.param('id', function (req, res, next, id) {
@@ -21,7 +21,7 @@ router.param('id', function (req, res, next, id) {
 
 /* GET user JSON object */
 router.get('/', function(req, res, next) {
-  res.json(req.requestedUser)
+  res.send('router works!');
 });
 
 router.post('/', function(req,res,next){
