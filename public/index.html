@@ -2,25 +2,34 @@
 <html lang="en">
 <head>
 	<title>RH</title>
-	<base href="/">
+    <base href="/">
 
     <!--local CSS dependencies-->
-    <link rel="stylesheet" type="text/css" href="/browser/app/main.css">
-    <link rel="stylesheet" type="text/css" href="/browser/components/navbar/navbar.css">   
-    <link rel="stylesheet" type="text/css" href="/browser/components/searchbar/searchbar.css"> 
+        <link rel="stylesheet" type="text/css" href="/browser/app/main.css">
+        <link rel="stylesheet" type="text/css" href="/browser/app/render/render.css">
+        <link rel="stylesheet" type="text/css" href="/browser/components/navbar/navbar.css">   
+        <link rel="stylesheet" type="text/css" href="/browser/components/searchbar/searchbar.css"> 
     <!--vendor JS dependencies-->
-    <script type="text/javascript" src="/lib/angular/angular.js"></script>
-    <script type="text/javascript" src="/lib/angular-ui-router/release/angular-ui-router.js"></script>
-    <script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
+        <script src="/lib/angular/angular.js"></script>
+        <script src="/lib/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="/lib/jquery/dist/jquery.js"></script>
     <!--angular JS dependencies-->
-    <script type="text/javascript" src="/browser/app/main.js"></script>
-    <script type="text/javascript" src="/browser/components/navbar/navbar.directive.js"></script>
-    <script type="text/javascript" src="/browser/components/searchbar/searchbar.directive.js"></script>
-    <!--Our JS-->
+        <script src="/browser/app/main.js"></script>
+        <script src="/browser/app/home/home.state.js"></script>
+        <script src="/browser/components/navbar/navbar.directive.js"></script>
+        <script src="/browser/components/searchbar/searchbar.directive.js"></script>
+        <script src="/browser/app/render/render.controller.js"></script>
+
 </head>
 <body ng-app="renderhouse">
+
 	<navbar></navbar>
 	<searchbar></searchbar>
-	<ui-view></ui-view>
+	
+	<div ui-view="render" id="renderFrame">
+    </div>
+	<div ui-view="app">
+	</div>
+
 </body>
 </html>
