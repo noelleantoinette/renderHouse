@@ -1,7 +1,8 @@
 'use strict';
 
 var app = require('./app'),
-    db = require('./dbInit');
+    db = require('./dbInit'),
+    api = require('./api');
 
 var path = require('path'),
     fs = require('fs'),
