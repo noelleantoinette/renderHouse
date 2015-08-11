@@ -6,9 +6,10 @@ var mongoose = require('mongoose');
 var db = require('../../../dbInit.js') // this file contains the connection to the database.  db represents a closure over the command mongoose.connect(databaseURI).connection
 
 
-var Cart = new mongoose.Schema{
-	user: {type:objectId, ref:'User', required:true}
-	products:[type:objectId, ref:'Product']
-};
+var Cart = new mongoose.Schema({
+	user: {type:mongoose.Schema.Types.ObjectId, ref:'User', required:true},
+	products:[{type:mongoose.Schema.Types.ObjectId, ref:'Product'}],
+	date: {type: Date}
+});
 
 module.exports = db.Model("Cart",Cart)
