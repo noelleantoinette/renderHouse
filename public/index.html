@@ -13,13 +13,17 @@
         <script src="/lib/angular/angular.js"></script>
         <script src="/lib/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="/lib/jquery/dist/jquery.js"></script>
+        <script src="/lib/threejs/build/three.js"></script>
     <!--angular JS dependencies-->
         <script src="/browser/app/main.js"></script>
-        <script src="/browser/app/main.state.js"></script>
         <script src="/browser/components/navbar/navbar.directive.js"></script>
         <script src="/browser/components/searchbar/searchbar.directive.js"></script>
+
+        <script src="/browser/app/home/home.state.js"></script>
+
         <script src="/browser/app/render/render.controller.js"></script>
         <script src="/browser/app/render/render.directive.js"></script>
+        
         <script src="/browser/app/login/login.controller.js"></script>
         <script src="/browser/app/login/login.state.js"></script>
 </head>
@@ -28,7 +32,16 @@
 <navbar></navbar>
 <searchbar></searchbar>
 
-	<render id="render-frame"></render>
+    <div id="render-frame" ng-controller="RenderController">
+        <div
+          ng-webgl
+          width="canvasWidth"
+          height="canvasHeight"
+          fillcontainer="dofillcontainer"
+          scale="scale"
+          material-type="materialType"
+        ></div>
+    </div>
 	<div ui-view id="app-frame"></div>
 
 </body>
