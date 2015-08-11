@@ -2,7 +2,7 @@
 
 app.config( function($stateProvider){
 
-	$stateProvider.state('main', {
+	$stateProvider.state('home', {
 		url: '/',
 		templateUrl: '/browser/app/home/home.html',
 		controller: function ($scope){
