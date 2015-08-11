@@ -16,10 +16,17 @@ var Product = new mongoose.Schema({
 	formatsAvailable: {type:String, required:true},
 	price: Number,
 	freeOption: Boolean,
+<<<<<<< HEAD
 	owner: {type: mongoose.Schema.Types.ObjectId, ref:"User", required:true},
 	timesDownloaded: Number,
 	comments: [{type: mongoose.Schema.Types.ObjectId, ref:"UserComments"}]
 });
+=======
+	owner: {type: ObjectId, ref:"User", required:true},
+	timesDownloaded: Number,
+	comments: [{type: ObjectId, ref:"UserComments"}]
+})
+>>>>>>> 48ebd2a870322fd4b57e14d27fe87380c2ef414d
 
 module.exports = db.Model("Product",Product);
 

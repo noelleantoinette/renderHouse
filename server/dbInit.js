@@ -1,7 +1,8 @@
-var mongoose = require('mongoose');
-var Promise = require('bluebird');
+'use strict';
 
-Promise.promisfyALL(mongoose);
+var mongoose = require('mongoose');
+var Promise = require('bluebird'); 
+Promise.promisifyAll(mongoose);
 
 var databaseURI = 'mongodb://localhost:27017/renderhouse'
 
