@@ -35,7 +35,7 @@ var User = new mongoose.Schema({
 })
 
 function generateSalt (){
-	return crypto.randomBytes(16).toSTring('base64');
+	return crypto.randomBytes(16).toString('base64');
 }
 
 function hash (password){
