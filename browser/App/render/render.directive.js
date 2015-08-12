@@ -1,237 +1,116 @@
 'use strict';
 
-// Credit for three.js directive: http://winkervsbecks.github.io/angularWebglDirective/
-
 app.directive('ngWebgl', function () {
     return {
-      restrict: 'A',
-      scope: { 
-        'width': '=',
-        'height': '=',
-        'fillcontainer': '=',
-        'scale': '=',
-        'materialType': '='
+      restrict: 'E',
+      scope: {
+        modelUrl: '=modelUrl'
       },
-      link: function postLink(scope, element, attrs) {
+      link: function (scope, element, attrs) {
 
-        var camera, scene, renderer,
-          shadowMesh, icosahedron, light,
-          mouseX = 0, mouseY = 0,
-          contW = (scope.fillcontainer) ? 
-            element[0].clientWidth : scope.width,
-          contH = scope.height, 
-          windowHalfX = contW / 2,
-          windowHalfY = contH / 2,
-          materials = {};
+        // Setup selections
+        scope.renderFrame = $('#render-frame');
+        var renderFrameWidth = scope.renderFrame.width();
+        var renderFrameHeight = scope.renderFrame.height();
 
+        // Setup THREE.js variables with scope
+        var camera;
+            scope.camera = camera;
+        var scene;
+            scope.scene = scene;
+        var renderer;
+            scope.renderer = renderer;
+        var previous;
+            scope.previous = previous;
 
-        scope.init = function () {
+        // initialize scene
+        init();
+
+        // load default model on scope -- jeep model -- via AssimpJSONLoader
+        var loader1 = new THREE.AssimpJSONLoader();
+
+        // Watch for changes to scope
+        scope.$watch('modelUrl', function (newValue, oldValue){
+          // console.log(newValue);
+          // console.log(scope.renderFrame[0]);
+          // console.log(element);
+          if (newValue != oldValue) {
+            loadModel(newValue); 
+          }
+        });
+
+        //!! Handle removing object and adding new object
+        function loadModel(modUrl) {
+            loader1.load(modUrl, function (object) {
+              object.scale.x = object.scale.y = object.scale.z = 0.2;
+              object.updateMatrix();
+              if (previous) scene.remove(previous);
+              scene.add(object);
+
+              previous = object;
+            });
+          }
+
+        // run load model on current modelUrl
+        loadModel(scope.modelUrl);
+        animate();
+
+        // Setup THREE.js cameras, scene, renderer, lighting
+        function init(){
 
           // Camera
-          camera = new THREE.PerspectiveCamera( 20, contW / contH, 1, 10000 );
-          camera.position.z = 1800;
+          camera = new THREE.PerspectiveCamera(50, renderFrameWidth / renderFrameHeight, 1, 2000);
+          camera.position.set(2,4,5);
 
           // Scene
           scene = new THREE.Scene();
+          scene.fog = new THREE.FogExp2(0x000000, 0.035);
 
-          // Ligthing
-          light = new THREE.DirectionalLight( 0xffffff );
-          light.position.set( 0, 0, 1 );
-          scene.add( light );
+          // Lights
+          scene.add(new THREE.AmbientLight(0xcccccc));
 
-          // Shadow
-          var canvas = document.createElement( 'canvas' );
-          canvas.width = 128;
-          canvas.height = 128;
+          var directionalLight = new THREE.DirectionalLight(Math.random() * 0xffffff);
+          directionalLight.position.x = Math.random() - 0.5;
+          directionalLight.position.y = Math.random() - 0.5;
+          directionalLight.position.z = Math.random() - 0.5;
+          directionalLight.position.normalize();
+          scene.add(directionalLight);
 
-          // Render a 2d gradient to use as shadow
-          var context = canvas.getContext( '2d' );
-          var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
-
-          gradient.addColorStop( 0.1, 'rgba(200,200,200,1)' );
-          gradient.addColorStop( 1, 'rgba(250,250,250,1)' );
-
-          context.fillStyle = gradient;
-          context.fillRect( 0, 0, canvas.width, canvas.height );
-
-          var shadowTexture = new THREE.Texture( canvas );
-          shadowTexture.needsUpdate = true;
-
-          var shadowMaterial = new THREE.MeshBasicMaterial( { 
-            map: shadowTexture 
-          } );
-          var shadowGeo = new THREE.PlaneGeometry( 300, 300, 1, 1 );
-
-          // Apply the shadow texture to a plane
-          shadowMesh = new THREE.Mesh( shadowGeo, shadowMaterial );
-          shadowMesh.position.y = - 250;
-          shadowMesh.rotation.x = - Math.PI / 2;
-          scene.add( shadowMesh );
-          
-          var faceIndices = [ 'a', 'b', 'c', 'd' ];
-
-          var color, f, p, n, vertexIndex,
-            radius = 200,
-            geometry  = new THREE.IcosahedronGeometry( radius, 1 );
-
-
-          for (var i = 0; i < geometry.faces.length; i ++) {
-
-            f  = geometry.faces[ i ];
-
-            n = ( f instanceof THREE.Face3 ) ? 3 : 4;
-
-            for( var j = 0; j < n; j++ ) {
-
-              vertexIndex = f[ faceIndices[ j ] ];
-
-              p = geometry.vertices[ vertexIndex ];
-
-              color = new THREE.Color( 0xffffff );
-              color.setHSL( 0.125 * vertexIndex/geometry.vertices.length, 1.0, 0.5 );
-
-              f.vertexColors[ j ] = color;
-
-            }
-
-          }
-
-          materials.lambert = new THREE.MeshLambertMaterial({ 
-            color: 0xffffff, 
-            shading: THREE.FlatShading, 
-            vertexColors: THREE.VertexColors 
-          });
-
-          materials.phong = new THREE.MeshPhongMaterial({ 
-            ambient: 0x030303, 
-            color: 0xdddddd, 
-            specular: 0x009900, 
-            shininess: 30, 
-            shading: THREE.FlatShading, 
-            vertexColors: THREE.VertexColors  
-          });
-
-          materials.wireframe = new THREE.MeshBasicMaterial({ 
-            color: 0x000000, 
-            shading: THREE.FlatShading, 
-            wireframe: true, 
-            transparent: true });
-
-          // Build and add the icosahedron to the scene
-          icosahedron = new THREE.Mesh( geometry, materials[scope.materialType] );
-          icosahedron.position.x = 0;
-          icosahedron.rotation.x = 0;
-          scene.add( icosahedron );
-
-          renderer = new THREE.WebGLRenderer( { antialias: true } );
+          //!!!! Renderer
+          renderer = new THREE.WebGLRenderer({ antialias: true });
+          renderer.setSize(renderFrameWidth, renderFrameHeight);
           renderer.setClearColor( 0xfafafa );
-          renderer.setSize( contW, contH );
+          element[0].appendChild(renderer.domElement);
 
-          // element is provided by the angular directive
-          element[0].appendChild( renderer.domElement );
+          // Check for Resize Event
+          window.addEventListener('resize', onWindowResize, false);
 
-          document.addEventListener( 'mousemove', scope.onDocumentMouseMove, false );
+          console.log(scene);
+        }
 
-          window.addEventListener( 'resize', scope.onWindowResize, false );
-
-        };
-
-        // -----------------------------------
-        // Event listeners
-        // -----------------------------------
-        scope.onWindowResize = function () {
-
-          scope.resizeCanvas();
-
-        };
-
-        scope.onDocumentMouseMove = function ( event ) {
-
-          mouseX = ( event.clientX - windowHalfX );
-          mouseY = ( event.clientY - windowHalfY );
-
-        };
-
-        // -----------------------------------
-        // Updates
-        // -----------------------------------
-        scope.resizeCanvas = function () {
-
-          contW = (scope.fillcontainer) ? 
-            element[0].clientWidth : scope.width;
-          contH = scope.height;
-
-          windowHalfX = contW / 2;
-          windowHalfY = contH / 2;
-
-          camera.aspect = contW / contH;
+        // Handle Resize
+        function onWindowResize(event){
+          renderer.setSize(renderFrameWidth, renderFrameHeight);
+          camera.aspect = renderFrameWidth / renderFrameHeight;
           camera.updateProjectionMatrix();
+        }
 
-          renderer.setSize( contW, contH );
+        // Animate
+        var t = 0; // ?
+        function animate() {          
+          render();
+          requestAnimationFrame(animate);
+        }
 
-        };
-
-        scope.resizeObject = function () {
-
-          icosahedron.scale.set(scope.scale, scope.scale, scope.scale);
-          shadowMesh.scale.set(scope.scale, scope.scale, scope.scale);
-
-        };
-
-        scope.changeMaterial = function () {
-
-          icosahedron.material = materials[scope.materialType];
-
-        };
-
-
-        // -----------------------------------
-        // Draw and Animate
-        // -----------------------------------
-        scope.animate = function () {
-
-          requestAnimationFrame( scope.animate );
-
-          scope.render();
-
-        };
-
-        scope.render = function () {
-
-          camera.position.x += ( mouseX - camera.position.x ) * 0.05;
-          // camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
-
-          camera.lookAt( scene.position );
-
-          renderer.render( scene, camera );
-
-        };
-
-        // -----------------------------------
-        // Watches
-        // -----------------------------------
-        scope.$watch('fillcontainer + width + height', function () {
-
-          scope.resizeCanvas();
-        
-        });
-
-        scope.$watch('scale', function () {
-        
-          scope.resizeObject();
-        
-        });
-
-        scope.$watch('materialType', function () {
-        
-          scope.changeMaterial();
-        
-        });
-
-        // Begin
-        scope.init();
-        scope.animate();
-
+        // Handle re-Rendering of scene for spinning
+        function render(){ 
+          var timer = Date.now() * 0.0005;
+            camera.position.x = Math.cos(timer) * 10;
+            camera.position.y = 4;
+            camera.position.z = Math.sin(timer) * 10;
+            camera.lookAt(scene.position);
+            renderer.render(scene, camera);
+        }
       }
-    };
-  });
+    }
+});
