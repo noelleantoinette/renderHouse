@@ -3,7 +3,7 @@
 app.factory('RenderService', function(){
 
 	var renderObj = {
-		url: 'models/jeep1.ms3d.json'
+		url: 'models/untitled-scene/untitled-scene.json'
 	}
 
 	return {

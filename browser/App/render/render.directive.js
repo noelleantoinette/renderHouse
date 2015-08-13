@@ -27,7 +27,9 @@ app.directive('ngWebgl', function () {
         init();
 
         // load default model on scope -- jeep model -- via AssimpJSONLoader
-        var loader1 = new THREE.AssimpJSONLoader();
+        // var loader1 = new THREE.AssimpJSONLoader();
+        var loader2 = new THREE.ObjectLoader();
+        var loader3 = new THREE.JSONLoader();
 
         // Watch for changes to scope
         scope.$watch('modelUrl', function (newValue, oldValue){
@@ -41,8 +43,9 @@ app.directive('ngWebgl', function () {
 
         //!! Handle removing object and adding new object
         function loadModel(modUrl) {
-            loader1.load(modUrl, function (object) {
-              object.scale.x = object.scale.y = object.scale.z = 0.2;
+            loader2.load(modUrl, function (object) {
+              object.scale.x = object.scale.y = object.scale.z = .022;
+              object.position.y = .5;
               object.updateMatrix();
               if (previous) scene.remove(previous);
               scene.add(object);
@@ -64,12 +67,12 @@ app.directive('ngWebgl', function () {
 
           // Scene
           scene = new THREE.Scene();
-          scene.fog = new THREE.FogExp2(0x000000, 0.035);
+          // scene.fog = new THREE.FogExp2(0x000000, 0.0001);
 
           // Lights
           scene.add(new THREE.AmbientLight(0xcccccc));
 
-          var directionalLight = new THREE.DirectionalLight(Math.random() * 0xffffff);
+          var directionalLight = new THREE.DirectionalLight(0xcccccc);
           directionalLight.position.x = Math.random() - 0.5;
           directionalLight.position.y = Math.random() - 0.5;
           directionalLight.position.z = Math.random() - 0.5;
@@ -79,7 +82,7 @@ app.directive('ngWebgl', function () {
           //!!!! Renderer
           renderer = new THREE.WebGLRenderer({ antialias: true });
           renderer.setSize(renderFrameWidth, renderFrameHeight);
-          renderer.setClearColor( 0xfafafa );
+          renderer.setClearColor( 0xffffff );
           element[0].appendChild(renderer.domElement);
 
           // Check for Resize Event
@@ -90,8 +93,8 @@ app.directive('ngWebgl', function () {
 
         // Handle Resize
         function onWindowResize(event){
-          renderer.setSize(renderFrameWidth, renderFrameHeight);
-          camera.aspect = renderFrameWidth / renderFrameHeight;
+          renderer.setSize(scope.renderFrame.width(), renderFrameHeight);
+          camera.aspect = scope.renderFrame.width() / renderFrameHeight;
           camera.updateProjectionMatrix();
         }
 
@@ -104,10 +107,10 @@ app.directive('ngWebgl', function () {
 
         // Handle re-Rendering of scene for spinning
         function render(){ 
-          var timer = Date.now() * 0.0005;
+          var timer = Date.now() * 0.00015;
             camera.position.x = Math.cos(timer) * 10;
             camera.position.y = 4;
-            camera.position.z = Math.sin(timer) * 10;
+            camera.position.z = Math.sin(timer) * 8.5;
             camera.lookAt(scene.position);
             renderer.render(scene, camera);
         }

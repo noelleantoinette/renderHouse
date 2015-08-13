@@ -18,7 +18,8 @@ var Product = new mongoose.Schema({
 	freeOption: Boolean,
 	owner: {type: mongoose.Schema.Types.ObjectId, ref:"User", required:true},
 	timesDownloaded: Number,
-	comments: [{type: mongoose.Schema.Types.ObjectId, ref:"UserComments"}]
+	comments: [{type: mongoose.Schema.Types.ObjectId, ref:"UserComments"}],
+	webRenderScale: Number
 });
 
 
