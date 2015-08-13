@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>RH</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>RH</title>
     <base href="/">
 
     <!--local CSS dependencies-->
         <link rel="stylesheet" type="text/css" href="/browser/app/main.css">
+        <link rel="stylesheet" type="text/css" href="/browser/app/home/home.css">
         <link rel="stylesheet" type="text/css" href="/browser/app/render/render.css">
         <link rel="stylesheet" type="text/css" href="/browser/components/navbar/navbar.css">   
         <link rel="stylesheet" type="text/css" href="/browser/components/searchbar/searchbar.css"> 
     <!--vendor JS dependencies-->
+        <script src="/lib/threejs/build/three.js"></script>
         <script src="/lib/angular/angular.js"></script>
         <script src="/lib/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="/lib/jquery/dist/jquery.js"></script>
-        <script src="/lib/threejs/build/three.js"></script>
+        <script src="/js/EditedAssimpJSONLoader.js"></script>        
     <!--angular JS dependencies-->
         <script src="/browser/app/main.js"></script>
         <script src="/browser/components/navbar/navbar.directive.js"></script>
         <script src="/browser/components/searchbar/searchbar.directive.js"></script>
 
+        <script src="/browser/app/home/home.controller.js"></script>
         <script src="/browser/app/home/home.state.js"></script>
 
+        <script src="/browser/app/render/render.factory.js"></script>
         <script src="/browser/app/render/render.controller.js"></script>
         <script src="/browser/app/render/render.directive.js"></script>
         
@@ -33,14 +39,8 @@
 <searchbar></searchbar>
 
     <div id="render-frame" ng-controller="RenderController">
-        <div
-          ng-webgl
-          width="canvasWidth"
-          height="canvasHeight"
-          fillcontainer="dofillcontainer"
-          scale="scale"
-          material-type="materialType"
-        ></div>
+        <pre>scope.modelUrl: {{modelUrl}}</pre>
+        <ng-webgl model-url="modelUrl" ></ng-webgl>
     </div>
 	<div ui-view id="app-frame"></div>
 
