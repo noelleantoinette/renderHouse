@@ -6,7 +6,7 @@ app.directive('ngWebgl', function () {
       scope: {
         modelUrl: '=modelUrl'
       },
-      link: function (scope, element, attrs) {
+      link: function (scope, element, attr) {
 
         // Setup selections
         scope.renderFrame = $('#render-frame');
@@ -85,7 +85,7 @@ app.directive('ngWebgl', function () {
           // Check for Resize Event
           window.addEventListener('resize', onWindowResize, false);
 
-          console.log(scene);
+          // console.log(scene);
         }
 
         // Handle Resize

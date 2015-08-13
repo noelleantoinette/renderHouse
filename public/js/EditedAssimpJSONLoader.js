@@ -25,7 +25,6 @@ THREE.AssimpJSONLoader.prototype = {
 	load: function ( url, onLoad, onProgress, onError, texturePath ) {
 
 		var scope = this;
-
 		this.texturePath = texturePath && ( typeof texturePath === "string" ) ? texturePath : this.extractUrlBase( url );
 
 		var loader = new THREE.XHRLoader( this.manager );
@@ -181,7 +180,6 @@ THREE.AssimpJSONLoader.prototype = {
 			convertColors(json.colors[0], geometry.faces);
 		}
 
-
 		//geometry.computeFaceNormals();
 		//geometry.computeVertexNormals();
 		//geometry.computeTangents();
@@ -192,7 +190,7 @@ THREE.AssimpJSONLoader.prototype = {
 	},
 
 	parseMaterial : function(json) {
-		console.log('Obj: ',json);
+		// console.log('Obj: ',json);
 		// Original mat value is null --- why does this matter :((((
 		// var mat = {},
 		var mat = {}, 
@@ -231,8 +229,8 @@ THREE.AssimpJSONLoader.prototype = {
 				if (prop.semantic === 1 || prop.semantic === 5 || prop.semantic === 6 || prop.semantic === 2) {
 					// console.log(scope);
 					// console.log(scope.texturePath);
-					var material_url,
-						tex;
+					// var material_url,
+					// 	tex;
 					(function(semantic) {
 						var loader = new THREE.TextureLoader(scope.manager),
 						keyname;
@@ -256,7 +254,7 @@ THREE.AssimpJSONLoader.prototype = {
 						material_url = scope.texturePath + '/' + prop.value
 						material_url = material_url.replace(/\\/g, '/');
 						//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-						// I think it's this material_url that's not get used properly
+						// I think it's this material_url that's not lining up
 						loader.load(material_url, function(tex) {
 							if (tex) {
 								// TODO: read texture settings from assimp.
@@ -311,8 +309,8 @@ THREE.AssimpJSONLoader.prototype = {
 				init_props[has_textures[i]] = defaultTexture();
 			}
 		}
-		// console.log('init_props: ', init_props);
-		// mat is the __proto__ of our objects?
+		console.log('init_props: ', init_props);
+		// mat is the __proto__ of our objects? No, mat is being returned tho by the parseMaterial function (being called by parse)
 		mat = new THREE.MeshPhongMaterial( init_props );
 		// Mat
 		console.log("Mat", mat);
@@ -320,6 +318,7 @@ THREE.AssimpJSONLoader.prototype = {
 	},
 
 	parseObject : function(json, node, meshes, materials) {
+
 		var obj = new THREE.Object3D()
 		,	i
 		,	idx
