@@ -2,10 +2,12 @@
 
 app.controller('RenderController', function ($scope, RenderService) {
 
-	$scope.modelUrl = RenderService.getModelUrl();
+	$scope.model = RenderService.getModel();
 	
-	$scope.$watch(function(){return RenderService.getModelUrl()}, function (newVal, oldVal){
-	    if(newVal != oldVal) $scope.modelUrl = RenderService.getModelUrl();
+	$scope.$watch(function(){
+		return RenderService.getModelUrl()
+	}, function (newVal, oldVal){
+		$scope.model = RenderService.getModel(); 
 	});
 
 });

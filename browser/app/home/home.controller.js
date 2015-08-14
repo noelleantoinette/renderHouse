@@ -2,8 +2,8 @@
 
 app.controller('HomeController', function ($scope, RenderService) {
 
-    $scope.changeModelUrl = function(newUrl){
-    	RenderService.changeModelUrl(newUrl);
+    $scope.changeModel = function(){
+    	RenderService.changeModel();
     }
 
 });

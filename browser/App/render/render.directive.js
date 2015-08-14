@@ -2,16 +2,18 @@
 
 app.directive('ngWebgl', function () {
     return {
-      restrict: 'E',
+      restrict: 'A',
       scope: {
-        modelUrl: '=modelUrl'
+        model: '=model'
       },
+      controller: "RenderController",
       link: function (scope, element, attr) {
 
         // Setup selections
         scope.renderFrame = $('#render-frame');
         var renderFrameWidth = scope.renderFrame.width();
         var renderFrameHeight = scope.renderFrame.height();
+        var renderObjectScaleModifier = renderFrameWidth/1024;
 
         // Setup THREE.js variables with scope
         var camera;
@@ -27,15 +29,11 @@ app.directive('ngWebgl', function () {
         init();
 
         // load default model on scope -- jeep model -- via AssimpJSONLoader
-        // var loader1 = new THREE.AssimpJSONLoader();
         var loader2 = new THREE.ObjectLoader();
         var loader3 = new THREE.JSONLoader();
 
         // Watch for changes to scope
-        scope.$watch('modelUrl', function (newValue, oldValue){
-          // console.log(newValue);
-          // console.log(scope.renderFrame[0]);
-          // console.log(element);
+        scope.$watch('model.url', function (newValue, oldValue){
           if (newValue != oldValue) {
             loadModel(newValue); 
           }
@@ -44,7 +42,7 @@ app.directive('ngWebgl', function () {
         //!! Handle removing object and adding new object
         function loadModel(modUrl) {
             loader2.load(modUrl, function (object) {
-              object.scale.x = object.scale.y = object.scale.z = .022;
+              object.scale.x = object.scale.y = object.scale.z = (.028 * renderObjectScaleModifier);
               object.position.y = .5;
               object.updateMatrix();
               if (previous) scene.remove(previous);
@@ -55,7 +53,7 @@ app.directive('ngWebgl', function () {
           }
 
         // run load model on current modelUrl
-        loadModel(scope.modelUrl);
+        loadModel(scope.model.url);
         animate();
 
         // Setup THREE.js cameras, scene, renderer, lighting

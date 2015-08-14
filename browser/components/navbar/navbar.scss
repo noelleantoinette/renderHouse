@@ -1,9 +1,10 @@
 $primary-black: #1a2a3a;
+$primary-light-gray: #bac0ca;
 $primary-white: #ffffff;
 
 .navbar {
 	width: 100%;
-	padding: .2em;
+	padding: .4em;
 	top: 0;
 	background-color: lighten($primary-black, 85%);
 	transition: .2s;
@@ -17,7 +18,7 @@ $primary-white: #ffffff;
 	}
 	box-shadow: 0em 0em 2em lighten($primary-black, 70%);
 }
-.navbar:hover {
+.navbar:hover, .navbar-expanded {
 	opacity: 1;
 	background-color: $primary-black;
 	padding: .6em;
@@ -38,16 +39,22 @@ $primary-white: #ffffff;
 
 .navigation {
 	text-align: right;
-	padding-right:5em;
+	padding-right:8em;
 	color: $primary-white;
-}
-
-.active {
 	li {
 		display: inline;
-		color: white;
+		color: $primary-light-gray;
 		font-size: .7em;
 		text-transform: uppercase;
-		margin-left: 2em;
+		margin-left: 2.5em;
+		font-family: 'PxGBold', sans-serif;	
 	}	
+	.empty {
+		opacity: .3;
+		text-decoration: none;
+	}
+	.active {
+		color: $primary-white;
+	}
 }
+

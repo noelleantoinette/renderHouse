@@ -1,10 +1,10 @@
 'use strict';
 
-app.directive('focusMe', function($parse, $timeout){
+app.directive('fieldFocus', function($parse, $timeout){
 	return {
 		restrict: 'A',
 		link: function (scope, element, attrs){
-			var status = $parse(attrs.focusMe);
+			var status = $parse(attrs.fieldFocus);
 			scope.$watch(status, function(val){
 				console.log('status = ', val);
 				if (val === true){

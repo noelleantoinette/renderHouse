@@ -1,6 +1,19 @@
+$primary-black: #1a2a3a;
+$primary-light-gray: #bac0ca;
+$primary-white: #ffffff;
+
 #render-frame {
 	width: 55vw;
 	height: 100vh;
 	float: left;
-	background-color: #fafafa;
+}
+
+.author {
+	bottom: 10vh;
+	left: 5vw;
+	position: absolute;
+
+	padding: .5em;
+	background-color: $primary-white;
+	color: $primary-light-gray;
 }
