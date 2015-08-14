@@ -55,10 +55,11 @@ Colors
 ------------------------------------------------*/
 
 $primary-black: #1a2a3a;
+$primary-light-gray: #bac0ca;
 $primary-white: #ffffff;
 
 /*---------------------------------------------- 
-General
+Structure
 ------------------------------------------------*/
 
 #app-frame {
@@ -73,7 +74,6 @@ General
 
 .app-content {
 	padding-top: 35vh;
-	padding-bottom: 1000px;
 }
 
 #top {
@@ -145,4 +145,21 @@ li {
 }
 
 
+
+
+
+/*---------------------------------------------- 
+Forms
+------------------------------------------------*/
+
+input {
+	height: 1.6em;
+	width: 100%;
+	border: none;
+	border-bottom: 1px solid $primary-light-gray;
+	font-size: 1.2em;
+	font-family: 'PxGRegular', sans-serif;
+	background: transparent;
+	margin-bottom: .6em;
+}
 

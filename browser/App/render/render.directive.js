@@ -2,16 +2,18 @@
 
 app.directive('ngWebgl', function () {
     return {
-      restrict: 'E',
+      restrict: 'A',
       scope: {
         modelUrl: '=modelUrl'
       },
+      controller: "RenderController",
       link: function (scope, element, attr) {
 
         // Setup selections
         scope.renderFrame = $('#render-frame');
         var renderFrameWidth = scope.renderFrame.width();
         var renderFrameHeight = scope.renderFrame.height();
+        var renderObjectScaleModifier = renderFrameWidth/1024;
 
         // Setup THREE.js variables with scope
         var camera;
@@ -44,7 +46,7 @@ app.directive('ngWebgl', function () {
         //!! Handle removing object and adding new object
         function loadModel(modUrl) {
             loader2.load(modUrl, function (object) {
-              object.scale.x = object.scale.y = object.scale.z = .022;
+              object.scale.x = object.scale.y = object.scale.z = (.028 * renderObjectScaleModifier);
               object.position.y = .5;
               object.updateMatrix();
               if (previous) scene.remove(previous);
