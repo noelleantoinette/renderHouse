@@ -4,7 +4,7 @@ app.directive('ngWebgl', function () {
     return {
       restrict: 'A',
       scope: {
-        modelUrl: '=modelUrl'
+        model: '=model'
       },
       controller: "RenderController",
       link: function (scope, element, attr) {
@@ -29,15 +29,11 @@ app.directive('ngWebgl', function () {
         init();
 
         // load default model on scope -- jeep model -- via AssimpJSONLoader
-        // var loader1 = new THREE.AssimpJSONLoader();
         var loader2 = new THREE.ObjectLoader();
         var loader3 = new THREE.JSONLoader();
 
         // Watch for changes to scope
-        scope.$watch('modelUrl', function (newValue, oldValue){
-          // console.log(newValue);
-          // console.log(scope.renderFrame[0]);
-          // console.log(element);
+        scope.$watch('model.url', function (newValue, oldValue){
           if (newValue != oldValue) {
             loadModel(newValue); 
           }
@@ -57,7 +53,7 @@ app.directive('ngWebgl', function () {
           }
 
         // run load model on current modelUrl
-        loadModel(scope.modelUrl);
+        loadModel(scope.model.url);
         animate();
 
         // Setup THREE.js cameras, scene, renderer, lighting

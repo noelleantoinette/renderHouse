@@ -3,6 +3,7 @@
 app.directive('navbar', function () {
 	return {
 		restrict: "E",
-		templateUrl: "../browser/components/navbar/navbar.html"
+		templateUrl: "../browser/components/navbar/navbar.html",
+		controller: 'ManagerController'
 	}
 });

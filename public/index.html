@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="/browser/app/main.css">
         <link rel="stylesheet" type="text/css" href="/browser/app/render/render.css">
         <link rel="stylesheet" type="text/css" href="/browser/components/navbar/navbar.css">   
+        <link rel="stylesheet" type="text/css" href="/browser/components/collection/collection.css">   
         <link rel="stylesheet" type="text/css" href="/browser/components/searchbar/searchbar.css"> 
         <link rel="stylesheet" type="text/css" href="/browser/app/join/join.css">
     <!--vendor JS dependencies-->
@@ -21,8 +22,12 @@
 
     <!--angular JS dependencies-->
         <script src="/browser/app/main.js"></script>
+
+        <script src="/browser/components/manager.controller.js"></script>
         <script src="/browser/components/navbar/navbar.directive.js"></script>
+        <script src="/browser/components/collection/collection.directive.js"></script>
         <script src="/browser/components/searchbar/searchbar.directive.js"></script>
+
 
         <script src="/browser/app/home/home.controller.js"></script>
         <script src="/browser/app/home/home.state.js"></script>
@@ -49,10 +54,13 @@
 
     <div id="top">
         <navbar></navbar>
+        <collection></collection>
         <searchbar></searchbar>
     </div>
 
-    <div ng-webgl id="render-frame"></div>
+    <div ng-webgl id="render-frame">
+        <div class="author" ng-controller="RenderController"><h2>Model made by {{model.author}}</h2></div>
+    </div>
 
 	<div id="app-frame">
         <div ui-view class="app-content"></div>
