@@ -20,7 +20,7 @@ router.param('id', function (req, res, next, id) {
 
 
 router.get('/', function (req, res, next) {
-	Product.find({}).populate('owner').exec()
+	Product.find({}).populate('creator').exec()
 	.then(function (products) {
 		res.json(products);
 	})
@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
 	Product.create(req.body)
 	.then(function (Product) {
-		return Product.populateAsync('owner');
+		return Product.populateAsync('creator');
 	})
 	.then(function (populated) {
 		res.status(201).json(populated);
