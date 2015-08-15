@@ -74,6 +74,9 @@ Structure
 
 .app-content {
 	padding-top: 15vh;
+	h1 {
+		width: 80%;
+	}
 }
 
 .large-vertical-space {
@@ -92,6 +95,10 @@ Structure
 
 .center {
 	text-align: center;
+}
+
+.container {
+	// padding: 5vh 5vw 5vh 5vw;
 }
 
 /*---------------------------------------------- 
@@ -131,7 +138,6 @@ h3 {
   font-size: 1em;
   font-family: 'PxGLight', sans-serif;
   color: #1a2a3a;
-  text-transform: uppercase;
 }
 
 h4 {
@@ -142,6 +148,7 @@ h4 {
 h5 {
 	font-size: .6em;
 	font-family: 'PxGBold', sans-serif;
+	text-transform: uppercase;
 }
 
 a {
@@ -152,7 +159,15 @@ li {
 	font-family: 'PxGBold', sans-serif;		
 }
 
+.tag {
+	font-size: .7em;
+	font-family: 'PxGRegular', sans-serif;
+	color: $primary-black;
+}
 
+.tag:hover {
+	text-decoration: underline;
+}
 
 
 
@@ -169,5 +184,21 @@ input {
 	font-family: 'PxGRegular', sans-serif;
 	background: transparent;
 	margin-bottom: .6em;
+}
+
+button {
+	padding: 1.2em;
+	padding-left: 2em;
+	padding-right: 2em;
+	text-transform: uppercase;
+	font-family: 'PxGBold', sans-serif;	
+	border: none;	
+	color: darken($primary-white, 20%);
+	background-color: $primary-black;
+}
+
+button:hover {
+	color: $primary-white;
+	background-color: lighten($primary-black, 10%);
 }
 

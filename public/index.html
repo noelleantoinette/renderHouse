@@ -9,7 +9,8 @@
 
     <!--local CSS dependencies-->
         <link rel="stylesheet" type="text/css" href="/browser/app/main.css">
-        <link rel="stylesheet" type="text/css" href="/browser/app/render/render.css">
+        <link rel="stylesheet" type="text/css" href="/browser/app/product/listing/listing.css">
+        <link rel="stylesheet" type="text/css" href="/browser/app/product/render/render.css">
         <link rel="stylesheet" type="text/css" href="/browser/components/navbar/navbar.css">   
         <link rel="stylesheet" type="text/css" href="/browser/components/collection/collection.css">   
         <link rel="stylesheet" type="text/css" href="/browser/components/searchbar/searchbar.css"> 
@@ -28,22 +29,17 @@
         <script src="/browser/components/collection/collection.directive.js"></script>
         <script src="/browser/components/searchbar/searchbar.directive.js"></script>
 
-
-        <script src="/browser/app/home/home.controller.js"></script>
-        <script src="/browser/app/home/home.state.js"></script>
-
-        <script src="/browser/app/render/render.factory.js"></script>
-        <script src="/browser/app/render/render.controller.js"></script>
-        <script src="/browser/app/render/render.directive.js"></script>
+        <script src="/browser/app/product/model.factory.js"></script>
+        <script src="/browser/app/product/listing/listing.controller.js"></script>
+        <script src="/browser/app/product/listing/listing.state.js"></script>
+        <script src="/browser/app/product/render/render.controller.js"></script>
+        <script src="/browser/app/product/render/render.directive.js"></script>
         
         <script src="/browser/app/login/login.controller.js"></script>
         <script src="/browser/app/login/login.state.js"></script>
 
         <script src="/browser/app/join/join.controller.js"></script>
         <script src="/browser/app/join/join.state.js"></script>
-
-        <script src="/browser/app/products/productlist/product.list.state.js"></script>
-        <script src="/browser/app/products/singleproduct/product.detail.state.js"></script>
 
         <script src="/browser/app/upload/upload.controller.js"></script>
         <script src="/browser/app/upload/upload.state.js"></script>
@@ -59,7 +55,7 @@
     </div>
 
     <div ng-webgl id="render-frame">
-        <div class="author" ng-controller="RenderController"><h2>Model made by {{model.author}}</h2></div>
+        <div class="creator" ng-controller="RenderController"><h5>Model made by {{model.creator}}</h5></div>
     </div>
 
 	<div id="app-frame">
